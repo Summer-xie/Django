@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8'>
+<title>微信红包</title>
+<style>
+body{
+  font:"微软雅黑";
+}
+div{
+  width:400px;
+  height:auto;
+  border-radius:3px;
+  background-color:pink;
+  margin:50px auto;
+  padding:20px 10px;
+}
+input[type='submit']{
+  width:77%;
+  height:32px;
+  border:0;
+  background-color:#FF4807;
+  font-size:15px;
+}
+input[type='submit']:hover{
+  background-color:red;
+  cursor:pointer;
+}
+ul{
+
+}
+li{
+  list-style:none;
+  padding:10px 0;
+}
+h5{
+  color:red;
+}
+table{
+  width:100%;
+line-height:30px;
+}
+</style>
+</head>
+<body>
+  <div>
+     <form action="/test/" method="POST">
+        {% csrf_token %}
+        <ul>
+         <li><lable>红包个数：</lable><input type="text" name="number" value="" placeholder="红包个数(0<个数<=100)" required /> 个</li>
+         <li><lable>总  金  额 ：</lable><input type="text" name="money" value="" placeholder="0<总金额<=个数*200" required /> 元</li>
+         <li><input type="submit" value="塞钱进红包" /></li>
+        {% if tips %}
+         <li><h5>{{tips}}</h5></li>
+        {% endif %}
+       </ul>
+     </form>
+  </div>
+  {% if result.items %}
+  <div style="min-width:300px;width:60%;background-color:#9EDCA3;">
+      <h3>{{money}}元的{{num}}个红包如下：</h3>
+      <table>
+        <tr>
+            <td>编号</td>
+            <td>单金额(元)</td>
+            <td>日期时间</td>
+        </tr>
+        {% for key,value in result.items %}
+        <tr>
+            <td>{{key}}</td>
+            <td>{{value}}</td>
+            <td>{{datetime}}</td>
+        </tr>
+        {% endfor %}
+     </table>
+  </div>
+  {% else %}
+     <p></p>
+  {% endif %}
+</body>
+</html>
